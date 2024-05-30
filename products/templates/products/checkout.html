@@ -1,0 +1,145 @@
+{% extends "products/base.html"%}
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group" id="item-list">
+      <h3 class="text-center">Here is your list</h3>
+
+
+    </ul>
+    <button id="vider-panier" style="margin-top: 20px; margin-left:20px; background-color: #f7444e;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;">Empty</button>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form method="POST" class="my-form" style="margin-top: 50px;">
+      {% csrf_token %}
+      <input type="hidden"id="items" name="items">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Name</label>
+          <input type="text" name="name" id="name" class="form-control" id="inputEmail4" placeholder="Hande">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Email</label>
+          <input type="Email" name="email" id="email" class="form-control" id="inputPassword4"
+            placeholder="Hande.Akalay@gmail.com">
+        </div>
+      </div>
+
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">City</label>
+          <input type="text" name="city" id="city" class="form-control" id="inputCity">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">State</label>
+          <select id="state" name="state" class="form-control">
+            <option selected>Morocco</option>
+            <option selected>France</option>
+            <option selected>Canada</option>
+            <option selected>Switzerland</option>
+            <option selected>USA</option>
+            <option selected>Turkish</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Zip</label>
+          <input name="zipcode" id="zipcode" type="text" class="form-control" >
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputZip">Total amount to be paid</label>
+        <input name="total" id="total" type="readonly"  >
+        <button type="submit" class="btn btn-primary" style="margin-top: 5px; margin-left:250px;">Order</button>
+
+    </form>
+  </div>
+
+</div>
+<style>
+     .my-form {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .my-form label {
+        font-weight: bold;
+    }
+
+    .my-form input[type="text"],
+    .my-form input[type="email"],
+    .my-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .my-form button[type="submit"] {
+        background-color: #f7444e;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+  if (localStorage.getItem('Baskets') == null) {
+    var Baskets = {};
+  } else {
+    Baskets = JSON.parse(localStorage.getItem('Baskets'));
+  }
+  var total=0;
+  var nombre=0;
+  for (item in Baskets) {
+    let name = Baskets[item][1];
+    let quantite = Baskets[item][0];
+    let price = Baskets[item][2];
+    nombre += quantite;
+    total += price;
+    let itemString = ` <li class="list-group-item d-flex justify-content-between align-items-center">
+              ${name}
+              <span class="badge badge-primary badge-pill" style="color: #fff;
+              background-color:  rgb(156, 155, 155)"> QTE: ${quantite} </span>
+              <span class="badge badge-warning badge-pill" style="color: #fff;
+              background-color:  rgb(156, 155, 155);"> ${price} </span>
+            </li>`;
+            
+    $('#item-list').append(itemString);
+  }
+  let itemNombre= ` <li class="list-group-item d-flex justify-content-between align-items-center">
+              <b> Price and Total quantity </b>
+              <span class="badge badge-danger badge-pill" style="color: #fff;
+              background-color:  rgb(156, 155, 155);"> T.QTE: ${nombre} </span>
+              Total:<span class="badge badge-dangerbadge-pill" style="color: #fff;
+              background-color:  rgb(156, 155, 155);"> ${total} </span>
+            </li>`;
+            
+    $('#item-list').append(itemNombre);
+    $('#total').val(total+"DH");
+
+  $('#items').val(JSON.stringify(Baskets));
+  document.getElementById('vider-panier').addEventListener('click', function() {
+    localStorage.removeItem('Baskets');  // Supprimer les éléments du panier du stockage local
+    $('#item-list').empty();  // Vider la liste affichée sur la page
+    $('#total').val('0DH');  // Mettre à jour le total affiché
+});
+
+
+</script>
+{% endblock %}

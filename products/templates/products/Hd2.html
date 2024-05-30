@@ -1,0 +1,366 @@
+{% extends "products/base.html"%}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Online</title>
+    <style>
+        
+        body {
+            color: #000;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .slider_section {
+
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            position: relative;
+            padding: 90px 0 75px 0;
+        }
+
+        .slider_section .row {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .slider_section #customCarousel1 {
+            width: 100%;
+            position: unset;
+        }
+
+        .slider_section .detail-box h1 {
+            font-size: 4.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #002c3e;
+            line-height: 70px;
+        }
+
+        .slider_section .detail-box h1 span {
+            color: #f7444e;
+        }
+
+        .slider_section .detail-box p {
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 1.5rem;
+        }
+
+        .slider_section .detail-box a {
+            display: inline-block;
+            padding: 12px 45px;
+            background-color: #f7444e;
+            border: 1px solid #f7444e;
+            color: #ffffff;
+            border-radius: 0;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .slider_section .detail-box a:hover {
+            background-color: transparent;
+            color: #f7444e;
+        }
+
+        .slider_section .img-box img {
+            width: 100%;
+        }
+
+        .slider_section .carousel-indicators {
+            position: unset;
+            margin: 0;
+            margin-top: 45px;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .slider_section .carousel-indicators li {
+            background-color: #ffffff;
+            width: 12px;
+            height: 12px;
+            border-radius: 100%;
+            opacity: 1;
+            list-style: none;
+
+        }
+
+        .slider_section .carousel-indicators li.active {
+            width: 20px;
+            height: 20px;
+            background-color: #f7444e;
+        }
+
+        .slider_bg_box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 400px;
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .user-form {
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            margin-top: 40px;
+        }
+
+        .form-heading h2 {
+            color: #000;
+        }
+
+        .form-heading h2 {
+            font-size: 24px;
+            margin: 0;
+            color: #f7444e;
+        }
+
+        .form-content {
+            margin-bottom: 20px;
+        }
+
+        .form-content input[type="text"],
+        .form-content input[type="text"],
+        .form-content input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-content button {
+            background-color: #f7444e;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        p.footer-text {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .form-container {
+            margin-right: auto;
+            margin-left: 0;
+            border: 2px solid #f7444e;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+    .error {
+    margin-top: 5%;
+  color: #000000;
+  font-weight: bold;
+}
+    </style>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Hande</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    
+    <section class="slider_section">
+        <div class="container">
+            <img src="{% static 'Products/images/slider-bg.jpg' %}" alt="Exemple d'image" class="slider_bg_box">
+            <!-- slider section -->
+            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-6 ">
+                                    <div class="detail-box">
+                                        <h1>
+                                            <span>
+                                                Sale 20% Off
+                                            </span>
+                                            <br>
+                                            On Everything
+                                        </h1>
+                                        <p><b> Your Unique Style</b></p>
+                                        <p>Explore our collection of clothing and accessories to express your
+                                            personality.</p>
+                                        <div class="btn-box">
+                                            <a href="{% url 'about' %}" class="btn1">
+                                                Explore
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-6 ">
+                                    <div class="detail-box">
+                                        <h1>
+                                            <span>
+                                                Sale 20% Off
+                                            </span>
+                                            <br>
+                                            On Everything
+                                        </h1>
+                                        <p><b>Trendy and Stylish</b></p>
+
+                                        <p>Our store offers trendy and stylish clothing and accessories for a unique
+                                            look.</p>
+
+                                        <div class="btn-box">
+                                            <a href="{% url 'about' %}" class="btn1">
+                                                Explore
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-6 ">
+                                    <div class="detail-box">
+                                        <h1>
+                                            <span>
+                                                Sale 20% Off
+                                            </span>
+                                            <br>
+                                            On Everything
+                                        </h1>
+
+                                        <p>Express your own style by choosing from our wide range of clothing and
+                                            accessories.</p>
+
+                                        <div class="btn-box">
+                                            <a href="{% url 'about' %}" class="btn1">
+                                                Explore
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <ol class="carousel-indicators">
+                        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
+                        <li data-target="#customCarousel1" data-slide-to="1"></li>
+                        <li data-target="#customCarousel1" data-slide-to="2"></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- hd.html -->
+             {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %} 
+
+            <div class="user-form">
+                <script src="{% static 'script.js' %}"></script>
+                <div class="container">
+                    <div class="form-container">
+                        <div class="form-heading">
+                            <h2>Login</h2>
+                        </div>
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="form-content">
+                                <div class="form-group">
+                                    <label for="username" placeholder="Enter Username">Username :</label>
+                                    <input type="text" id="username" name="username" required>{{username}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" placeholder="Password">Password:</label>
+                                    <input type="password" id="password" name="password" required>{{password}}
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn" style="margin-bottom: 20px; margin-top: 20px;"
+                                        href="{% url 'home' %}">Login</button>
+                                </div>
+                                <div class="social">
+                                    <div class="go"><i class="fab fa-google"></i> Google</div>
+                                    <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+                                </div>
+                                <a id="create-account-btn" style="color: #f7444e" href="{% url 'signup' %}">Create a account</a>
+                            </div>
+                        </form>
+                        {% if error %}
+                        <p>{{ error }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+
+    </section>
+    {% endblock %}

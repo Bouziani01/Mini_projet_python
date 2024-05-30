@@ -1,0 +1,29 @@
+{% extends "products/base.html"%}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <img src="{{product.image}}" width="520px" height="700px" alt="">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="text-warning display-3" style="color: #f7444e; font-weight: bold">
+            <b><i>{{product.name}}</i></b>
+        </div>
+        <div class="text-danger" style="margin-top: 10px; color: rgb(0, 0, 0)">
+            <b>Prix : {{product.price}} DH</b>
+        </div>
+        <div style="margin-top: 10px;">
+            {{product.description}}
+        </div>
+        {% if user.is_authenticated %}
+            <!-- Afficher les boutons Modifier et Supprimer pour les utilisateurs authentifiés -->
+            <a href="{% url 'edit_product' product.id %}" class="btn btn-primary" style="background-color: #f7444e; margin-top: 10px;border-color: #f7444e;">Edit</a>
+            <a href="{% url 'delete_product' product.id %}" class="btn btn-danger" style="background-color: #f7444e; margin-top: 10px;border-color: #f7444e;">Delete</a>
+        {% endif %}
+    </div>
+</div>
+
+           
+        
+{% endblock %}

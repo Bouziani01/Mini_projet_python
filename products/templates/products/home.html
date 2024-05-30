@@ -1,0 +1,110 @@
+{% extends "products/base.html"%}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <form class="card card-sm">
+            <div class="card body row no gutters align items-center">
+                <div class="col">
+                    <input type="search" placeholder="Search" name="item-name"
+                        class="form-control  form-control-borderless" aria-label="Search">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-sucess my-2 my-sm-0" type="submit"
+                        style="background-color: rgb(156, 155, 155)">Search</button>
+                </div>
+                {% if user.is_authenticated %}
+                <a href="{% url 'create_product' %}" class="btn btn-primary" style="background-color: #f7444e; margin-top: 10px;border-color: #f7444e;">Create</a>
+                {% endif %}
+  
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-3">
+        <div class="card">
+            <img src="{{product.image}}" alt="" class="card-ing-top">
+            <div class="card-body">
+                <div id="aa{{product.id}}" class="card-title">{{product.name}}</div>
+                <div id="price{{product.id}}" style="color: rgb(0, 0, 0); font-weight: bold" class="card-text">
+                    {{product.price}} DH</div>
+                <a href="{{product.id}}" class="btn btn-warning" style="background-color: #f7444e; border-color: #f7444e;">Show</a>
+                <button id="{{product.id}}" class="btn ted btn-success"
+                    style="background-color: rgb(156, 155, 155); border-color:rgb(156, 155, 155)">Add</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="row mt-3">
+        <div class="col-md-3 offset-md-4">
+            <ul class="pagination">
+                {% if products.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{products.previous_page_number}}">Previous</a>
+                </li>
+                {% endif %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{products.number}}">{{products.number}}</a>
+                </li>
+                {% if products.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{products.next_page_number}}">Next</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    console.log('juste pour tester');
+    if (localStorage.getItem('Baskets') == null) {
+        var Baskets = {};
+    } else {
+        Baskets = JSON.parse(localStorage.getItem('Baskets'));
+    }
+    $(document).on('click', '.ted', function () {
+        console.log('Add');
+        var item_id = this.id.toString();
+        console.log(item_id);
+        if (Baskets[item_id] != undefined) {
+            quantite = Baskets[item_id][0] + 1;
+            Baskets[item_id][0] = quantite;
+            Baskets[item_id][2] += parseFloat(document.getElementById("price" + item_id).innerHTML);
+        } else {
+            quantite = 1;
+            price = parseFloat(document.getElementById("price" + item_id).innerHTML);
+            name = document.getElementById("aa" + item_id).innerHTML;
+
+
+            Baskets[item_id] = [quantite, name, price];
+
+        }
+        console.log(Baskets);
+        localStorage.setItem('Baskets', JSON.stringify(Baskets));
+        document.getElementById("Baskets").innerHTML = "Baskets(" + Object.keys(Baskets).length + ")";
+
+    });
+    AfficherList(Baskets);
+    function AfficherList(Baskets) {
+        var BasketsString = " ";
+        BasketsString += " <h6>Here is your list</h6>";
+        var index = 1;
+        for (var x in Baskets) {
+            BasketsString += index;
+            BasketsString += document.getElementById("aa" + x).innerHTML + " Quantity: " + Baskets[x][0] + " </br>"
+            index += 1;
+        }
+        BasketsString += "<a href='/checkout' class='btn btn-primary' style= 'background-color: rgb(156, 155, 155);  border-color:rgb(156, 155, 155)'>Checkout</a>";
+        $('[data-toggle="popover"]').popover();
+        document.getElementById('Baskets').setAttribute('data-content', BasketsString);
+    }
+
+
+
+</script>
+
+{% endblock %}
